@@ -1,6 +1,4 @@
-<!DOCTYPE html>
-<!-- saved from url=(0086)file:///Users/ld/Projects/ratpack-under-the-hood/build/asciidoc/revealjs/slides.html#/ -->
-<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="utf-8"><meta name="author" content="Under the hood."><title>Ratpack</title><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" name="viewport"><link href="file:///Users/ld/Projects/ratpack-under-the-hood/build/asciidoc/revealjs/reveal.js/css/reveal.css" rel="stylesheet"><link rel="stylesheet" href="file:///Users/ld/Projects/ratpack-under-the-hood/build/asciidoc/revealjs/styles/theme.css" id="theme"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css"><style>/* Stylesheet for CodeRay to match GitHub theme | MIT License | http://foundation.zurb.com */
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8" /><meta name="author" content="Under the hood." /><title>Ratpack</title><meta content="yes" name="apple-mobile-web-app-capable" /><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style" /><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" name="viewport" /><link href="reveal.js/css/reveal.css" rel="stylesheet" /><link rel="stylesheet" href="styles/theme.css" id="theme" /><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css" /><style>/* Stylesheet for CodeRay to match GitHub theme | MIT License | http://foundation.zurb.com */
 /*pre.CodeRay {background-color:#f7f7f8;}*/
 .CodeRay .line-numbers{border-right:1px solid #d8d8d8;padding:0 0.5em 0 .25em}
 .CodeRay span.line-numbers{display:inline-block;margin-right:.5em;color:rgba(0,0,0,.3)}
@@ -88,55 +86,55 @@ table.CodeRay td.code>pre{padding:0}
 .CodeRay .insert .insert{color:#080}
 .CodeRay .delete .delete{color:#800}
 .CodeRay .change .change{color:#66f}
-.CodeRay .head .head{color:#f4f}</style><link href="file:///Users/ld/Projects/ratpack-under-the-hood/build/asciidoc/revealjs/reveal.js/lib/css/zenburn.css" rel="stylesheet"><script type="text/javascript">document.write( '<link rel="stylesheet" href="reveal.js/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );</script><link rel="stylesheet" href="./Ratpack_files/paper.css" type="text/css" media="print"></head><body style="transition: -webkit-transform 0.8s ease;"><div class="reveal linear center" data-transition-speed="default" data-background-transition="fade"><div class="slides" style="width: 960px; height: 700px; zoom: 1.10057142857143;"><section class="present" style="top: -101px; display: block;"><h2>Ratpack</h2><p><small>Under the hood.</small></p></section><section id="luke-daley" hidden="" class="future" style="top: -111px; display: block;"><h2>Luke Daley</h2><div class="paragraph"><p>Creator.</p></div></section>
-<section id="what" hidden="" class="future" style="top: -146.5px; display: block;"><h2>What?</h2><div class="ulist"><ul><li class="fragment" data-fragment-index="0"><p>Execution (non blocking)</p></li><li class="fragment" data-fragment-index="1"><p>Promise transformations</p></li><li class="fragment" data-fragment-index="2"><p>Handler composition</p></li></ul></div></section>
-<section id="blocking" hidden="" class="future" style="top: -225px; display: block;"><h2>Blocking?</h2><div class="paragraph"><p>Any kind of waiting.</p></div>
-<div class="ulist"><ul><li class="fragment" data-fragment-index="0"><p>IO (e.g. <code>InputStream</code>)</p></li><li class="fragment" data-fragment-index="1"><p><code>Lock.lock()</code></p></li><li class="fragment" data-fragment-index="2"><p>JDBC</p></li><li class="fragment" data-fragment-index="3"><p>Common HTTP clients</p></li><li class="fragment" data-fragment-index="4"><p><em>most APIs</em></p></li></ul></div></section>
-<section id="why-is-blocking-bad" hidden="" class="future" style="top: -20px; display: none;"><h2>Why is blocking “bad”?</h2><div class="paragraph"><p>More threads than there are cores creates <em>contention</em>.</p></div></section>
-<section id="blocking-and-threads" hidden="" class="future" style="top: -20px; display: none;"><h2>Blocking and threads</h2><div class="paragraph"><p>Each concurrent piece of work requires a separate thread.</p></div>
-<div class="paragraph fragment" data-fragment-index="0"><p>100 concurrent requests =~ 100 threads</p></div></section>
-<section id="performance" hidden="" class="future" style="top: -20px; display: none;"><h2>Performance?</h2><div class="paragraph"><p>Not the whole story.</p></div>
-<div class="paragraph fragment" data-fragment-index="0"><p>Really… low &amp; <em>predictably scalable</em> resource usage.</p></div></section>
-<section id="more" hidden="" class="future" style="top: -20px; display: none;"><h2>More…</h2><div class="paragraph"><p><a href="http://www.kegel.com/c10k.html">The C10K problem.</a></p></div>
-<div class="paragraph"><p><a href="https://www.youtube.com/watch?v=aEuNBk1b5OE&t=499">Why Netflix are moving towards non blocking.</a></p></div></section>
-<section id="non-blocking" hidden="" class="future" style="top: -20px; display: none;"><h2>Non blocking?</h2><div class="paragraph"><p>Relinquish the thread when you have to wait.</p></div>
+.CodeRay .head .head{color:#f4f}</style><link href="reveal.js/lib/css/zenburn.css" rel="stylesheet" /><script type="text/javascript">document.write( '<link rel="stylesheet" href="reveal.js/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );</script></head><body><div class="reveal"><div class="slides"><section><h2>Ratpack</h2><p><small>Under the hood.</small></p></section><section id="luke-daley"><h2>Luke Daley</h2><div class="paragraph"><p>Creator.</p></div></section>
+<section id="what"><h2>What?</h2><div class="ulist"><ul><li class="fragment"><p>Execution (non blocking)</p></li><li class="fragment"><p>Promise transformations</p></li><li class="fragment"><p>Handler composition</p></li></ul></div></section>
+<section id="blocking"><h2>Blocking?</h2><div class="paragraph"><p>Any kind of waiting.</p></div>
+<div class="ulist"><ul><li class="fragment"><p>IO (e.g. <code>InputStream</code>)</p></li><li class="fragment"><p><code>Lock.lock()</code></p></li><li class="fragment"><p>JDBC</p></li><li class="fragment"><p>Common HTTP clients</p></li><li class="fragment"><p><em>most APIs</em></p></li></ul></div></section>
+<section id="why-is-blocking-bad"><h2>Why is blocking “bad”?</h2><div class="paragraph"><p>More threads than there are cores creates <em>contention</em>.</p></div></section>
+<section id="blocking-and-threads"><h2>Blocking and threads</h2><div class="paragraph"><p>Each concurrent piece of work requires a separate thread.</p></div>
+<div class="paragraph fragment"><p>100 concurrent requests =~ 100 threads</p></div></section>
+<section id="performance"><h2>Performance?</h2><div class="paragraph"><p>Not the whole story.</p></div>
+<div class="paragraph fragment"><p>Really… low &amp; <em>predictably scalable</em> resource usage.</p></div></section>
+<section id="more"><h2>More…</h2><div class="paragraph"><p><a href="http://www.kegel.com/c10k.html">The C10K problem.</a></p></div>
+<div class="paragraph"><p><a href="https://www.youtube.com/watch?v=aEuNBk1b5OE&amp;t=499">Why Netflix are moving towards non blocking.</a></p></div></section>
+<section id="non-blocking"><h2>Non blocking?</h2><div class="paragraph"><p>Relinquish the thread when you have to wait.</p></div>
 <div class="paragraph"><p>Get a thread back when you can do more work.</p></div>
-<div class="paragraph fragment" data-fragment-index="0"><p><strong>Use it or lose it.</strong></p></div></section>
-<section id="blocking-2" hidden="" class="future" style="top: -20px; display: none;"><h2>Blocking</h2><div class="paragraph"><p>Render the contents of a file.</p></div>
+<div class="paragraph fragment"><p><strong>Use it or lose it.</strong></p></div></section>
+<section id="blocking-2"><h2>Blocking</h2><div class="paragraph"><p>Render the contents of a file.</p></div>
 <div class="listingblock"><div class="content"><pre class="CodeRay"><code class="groovy language-groovy">handlers {
   get {
-    render file(<span class="string"><span class="delimiter">"</span><span class="content">foo.txt</span><span class="delimiter">"</span></span>).text
+    render file(<span class="string"><span class="delimiter">&quot;</span><span class="content">foo.txt</span><span class="delimiter">&quot;</span></span>).text
   }
 }</code></pre></div></div>
 <div class="paragraph"><p>Bad!</p></div></section>
-<section id="non-blocking-2" hidden="" class="future" style="top: -20px; display: none;"><h2>Non blocking</h2><div class="paragraph"><p>Render the contents of a file.</p></div>
+<section id="non-blocking-2"><h2>Non blocking</h2><div class="paragraph"><p>Render the contents of a file.</p></div>
 <div class="listingblock"><div class="content"><pre class="CodeRay"><code class="groovy language-groovy"><span class="keyword">import</span> <span class="include">ratpack.exec.Blocking</span>
 
 handlers {
   get {
     Blocking.get {
-      file(<span class="string"><span class="delimiter">"</span><span class="content">foo.txt</span><span class="delimiter">"</span></span>).text
+      file(<span class="string"><span class="delimiter">&quot;</span><span class="content">foo.txt</span><span class="delimiter">&quot;</span></span>).text
     } then {
       render <span class="local-variable">it</span>
     }
 }</code></pre></div></div>
 <div class="paragraph"><p>Good!</p></div></section>
-<section id="non-blocking-2-2" hidden="" class="future" style="top: -20px; display: none;"><h2>Non blocking (2)</h2><div class="paragraph"><p>Render the contents of a file.</p></div>
+<section id="non-blocking-2-2"><h2>Non blocking (2)</h2><div class="paragraph"><p>Render the contents of a file.</p></div>
 <div class="listingblock"><div class="content"><pre class="CodeRay"><code class="groovy language-groovy"><span class="keyword">import</span> <span class="include">ratpack.exec.Blocking</span>
 
 handlers {
   get {
-    render Blocking.get { file(<span class="string"><span class="delimiter">"</span><span class="content">foo.txt</span><span class="delimiter">"</span></span>).text }
+    render Blocking.get { file(<span class="string"><span class="delimiter">&quot;</span><span class="content">foo.txt</span><span class="delimiter">&quot;</span></span>).text }
   }
 }</code></pre></div></div>
 <div class="paragraph"><p>Even better!</p></div></section>
-<section id="non-blocking-3" hidden="" class="future" style="top: -20px; display: none;"><h2>Non blocking (3)</h2><div class="paragraph"><p>Render the contents of a file.</p></div>
+<section id="non-blocking-3"><h2>Non blocking (3)</h2><div class="paragraph"><p>Render the contents of a file.</p></div>
 <div class="listingblock"><div class="content"><pre class="CodeRay"><code class="groovy language-groovy"><span class="keyword">import</span> <span class="include">ratpack.exec.Promise</span>
 
 handlers {
   get {
     render Promise.of { down -&gt;
-      readFileAsync(file(<span class="string"><span class="delimiter">"</span><span class="content">foo.txt</span><span class="delimiter">"</span></span>), <span class="keyword">new</span> <span class="predefined-type">Callback</span>() {
+      readFileAsync(file(<span class="string"><span class="delimiter">&quot;</span><span class="content">foo.txt</span><span class="delimiter">&quot;</span></span>), <span class="keyword">new</span> <span class="predefined-type">Callback</span>() {
         <span class="type">void</span> onDone(<span class="predefined-type">String</span> contents) {
           down.success(contents)
         }
@@ -145,42 +143,42 @@ handlers {
   }
 }</code></pre></div></div>
 <div class="paragraph"><p>Better!</p></div></section>
-<section id="rendering-files" hidden="" class="future" style="top: -20px; display: none;"><h2>Rendering files</h2><div class="paragraph"><p>Use this API.</p></div>
+<section id="rendering-files"><h2>Rendering files</h2><div class="paragraph"><p>Use this API.</p></div>
 <div class="listingblock"><div class="content"><pre class="CodeRay"><code class="groovy language-groovy">handlers {
   get {
-    render file(<span class="string"><span class="delimiter">"</span><span class="content">foo.txt</span><span class="delimiter">"</span></span>) <span class="comment">// adhoc</span>
+    render file(<span class="string"><span class="delimiter">&quot;</span><span class="content">foo.txt</span><span class="delimiter">&quot;</span></span>) <span class="comment">// adhoc</span>
   }
-  files { <span class="local-variable">it</span>.dir(<span class="string"><span class="delimiter">"</span><span class="content">public</span><span class="delimiter">"</span></span>) } <span class="comment">// serve a directory</span>
+  files { <span class="local-variable">it</span>.dir(<span class="string"><span class="delimiter">&quot;</span><span class="content">public</span><span class="delimiter">&quot;</span></span>) } <span class="comment">// serve a directory</span>
 }</code></pre></div></div></section>
-<section id="implications" hidden="" class="future" style="top: -20px; display: none;"><h2>Implications?</h2><div class="paragraph"><p>Non blocking changes a lot.</p></div>
-<div class="ulist"><ul><li class="fragment" data-fragment-index="0"><p><code>try</code>/<code>catch</code> doesn’t work.</p></li><li class="fragment" data-fragment-index="1"><p><code>ThreadLocal</code> doesn’t work.</p></li><li class="fragment" data-fragment-index="2"><p>Most libs aren’t non blocking.</p></li><li class="fragment" data-fragment-index="3"><p>Debugging sucks (stack traces are segmented)</p></li></ul></div></section>
-<section id="execution" hidden="" class="future" style="top: -20px; display: none;"><h2>Execution</h2><div class="paragraph"><p><a href="http://ratpack.io/manual/current/api/index.html?ratpack/exec/Execution.html"><code>ratpack.exec.Execution</code></a></p></div>
+<section id="implications"><h2>Implications?</h2><div class="paragraph"><p>Non blocking changes a lot.</p></div>
+<div class="ulist"><ul><li class="fragment"><p><code>try</code>/<code>catch</code> doesn&#8217;t work.</p></li><li class="fragment"><p><code>ThreadLocal</code> doesn&#8217;t work.</p></li><li class="fragment"><p>Most libs aren&#8217;t non blocking.</p></li><li class="fragment"><p>Debugging sucks (stack traces are segmented)</p></li></ul></div></section>
+<section id="execution"><h2>Execution</h2><div class="paragraph"><p><a href="http://ratpack.io/manual/current/api/index.html?ratpack/exec/Execution.html"><code>ratpack.exec.Execution</code></a></p></div>
 <div class="paragraph"><p>Kinda similar to <code>Thread</code> with the blocking model.</p></div>
 <div class="paragraph"><p>A logical piece of work (e.g. handling a request).</p></div></section>
-<section id="try-catch" hidden="" class="future" style="top: -20px; display: none;"><h2>try/catch</h2><div class="paragraph"><p>Executions have an error handler.</p></div>
+<section id="try-catch"><h2>try/catch</h2><div class="paragraph"><p>Executions have an error handler.</p></div>
 <div class="listingblock"><div class="content"><pre class="CodeRay"><code class="groovy language-groovy"><span class="keyword">import</span> <span class="include">ratpack.exec.Execution</span>
 <span class="keyword">import</span> <span class="include">ratpack.exec.Blocking</span>
 
 Execution.fork().onError {
   println <span class="local-variable">it</span>.message
 }.start {
-  Blocking.get { <span class="keyword">throw</span> <span class="keyword">new</span> <span class="exception">Exception</span>(<span class="string"><span class="delimiter">"</span><span class="content">!</span><span class="delimiter">"</span></span>) }
+  Blocking.get { <span class="keyword">throw</span> <span class="keyword">new</span> <span class="exception">Exception</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">!</span><span class="delimiter">&quot;</span></span>) }
 }</code></pre></div></div></section>
-<section id="try-catch-2" hidden="" class="future" style="top: -20px; display: none;"><h2>try/catch (2)</h2><div class="paragraph"><p>Request executions use <code>ServerErrorHandler</code> as the error handler.</p></div>
+<section id="try-catch-2"><h2>try/catch (2)</h2><div class="paragraph"><p>Request executions use <code>ServerErrorHandler</code> as the error handler.</p></div>
 <div class="listingblock"><div class="content"><pre class="CodeRay"><code class="groovy language-groovy"><span class="keyword">package</span> ratpack.handling;
 
 <span class="directive">public</span> <span class="type">interface</span> ServerErrorHandler {
   <span class="type">void</span> error(<span class="predefined-type">Context</span> context, <span class="predefined-type">Throwable</span> throwable) <span class="directive">throws</span> <span class="exception">Exception</span>;
 }</code></pre></div></div></section>
-<section id="thread-locals" hidden="" class="future" style="top: -20px; display: none;"><h2>Thread locals</h2><div class="paragraph"><p><code>Execution</code> implements <code>MutableRegistry</code></p></div>
+<section id="thread-locals"><h2>Thread locals</h2><div class="paragraph"><p><code>Execution</code> implements <code>MutableRegistry</code></p></div>
 <div class="listingblock"><div class="content"><pre class="CodeRay"><code class="groovy language-groovy"><span class="keyword">import</span> <span class="include">ratpack.exec.Execution</span>
 <span class="keyword">import</span> <span class="include">ratpack.exec.Blocking</span>
 
 Execution.fork().start {
-  Execution.current().add(<span class="string"><span class="delimiter">"</span><span class="content">some value</span><span class="delimiter">"</span></span>)
+  Execution.current().add(<span class="string"><span class="delimiter">&quot;</span><span class="content">some value</span><span class="delimiter">&quot;</span></span>)
   Blocking.get { Execution.current().get(<span class="predefined-type">String</span>) } then { render <span class="local-variable">it</span> }
 }</code></pre></div></div></section>
-<section id="execinterceptor" hidden="" class="future" style="top: -20px; display: none;"><h2>ExecInterceptor</h2><div class="paragraph"><p>Interceptors let you wrap execution segments.</p></div>
+<section id="execinterceptor"><h2>ExecInterceptor</h2><div class="paragraph"><p>Interceptors let you wrap execution segments.</p></div>
 <div class="listingblock"><div class="content"><pre class="CodeRay"><code class="groovy language-groovy"><span class="keyword">package</span> ratpack.exec
 
 <span class="directive">public</span> <span class="type">interface</span> ExecInterceptor {
@@ -191,7 +189,7 @@ Execution.fork().start {
 
   <span class="type">void</span> intercept(Execution execution, ExecType execType, Block continuation) <span class="directive">throws</span> <span class="exception">Exception</span>;
 }</code></pre></div></div></section>
-<section id="execinterceptor-2" hidden="" class="future" style="top: -20px; display: none;"><h2>ExecInterceptor</h2><div class="paragraph"><p>Let’s you integrate with libs using thread locals.</p></div>
+<section id="execinterceptor-2"><h2>ExecInterceptor</h2><div class="paragraph"><p>Let&#8217;s you integrate with libs using thread locals.</p></div>
 <div class="listingblock"><div class="content"><pre class="CodeRay"><code class="groovy language-groovy"><span class="keyword">import</span> <span class="include">org.slf4j.MDC</span>;
 
 <span class="directive">public</span> <span class="type">void</span> intercept(Execution execution, ExecType type, Block continuation) <span class="directive">throws</span> <span class="exception">Exception</span> {
@@ -205,9 +203,9 @@ Execution.fork().start {
     MDC.clear();
   }
 }</code></pre></div></div></section>
-<section id="promise" hidden="" class="future" style="top: -20px; display: none;"><h2>Promise</h2><div class="paragraph"><p>A representation of a <em>potential</em> value.</p></div>
-<div class="paragraph fragment" data-fragment-index="0"><p>Say things about the value without actually having the value.</p></div></section>
-<section id="promise-2" hidden="" class="future" style="top: -20px; display: none;"><h2>Promise</h2><div class="listingblock"><div class="content"><pre class="CodeRay"><code class="groovy language-groovy"><span class="keyword">package</span> ratpack.exec;
+<section id="promise"><h2>Promise</h2><div class="paragraph"><p>A representation of a <em>potential</em> value.</p></div>
+<div class="paragraph fragment"><p>Say things about the value without actually having the value.</p></div></section>
+<section id="promise-2"><h2>Promise</h2><div class="listingblock"><div class="content"><pre class="CodeRay"><code class="groovy language-groovy"><span class="keyword">package</span> ratpack.exec;
 
 <span class="directive">public</span> <span class="type">interface</span> Promise&lt;T&gt; {
   <span class="directive">static</span> &lt;T&gt; Promise&lt;T&gt; of(Upstream&lt;T&gt; upstream) { }
@@ -222,16 +220,16 @@ Execution.fork().start {
   <span class="type">void</span> error(<span class="predefined-type">Throwable</span> throwable);
   <span class="type">void</span> complete();
 }</code></pre></div></div></section>
-<section id="promise-usage" hidden="" class="future" style="top: -20px; display: none;"><h2>Promise usage</h2><div class="listingblock"><div class="content"><pre class="CodeRay"><code class="groovy language-groovy">Promise.of { down -&gt;
-  <span class="predefined-type">Thread</span>.start { down.success(<span class="string"><span class="delimiter">"</span><span class="content">foo</span><span class="delimiter">"</span></span>) }
+<section id="promise-usage"><h2>Promise usage</h2><div class="listingblock"><div class="content"><pre class="CodeRay"><code class="groovy language-groovy">Promise.of { down -&gt;
+  <span class="predefined-type">Thread</span>.start { down.success(<span class="string"><span class="delimiter">&quot;</span><span class="content">foo</span><span class="delimiter">&quot;</span></span>) }
 } then {
   println <span class="local-variable">it</span> <span class="comment">// prints 'foo'</span>
 }</code></pre></div></div></section>
-<section id="promise-transformations" hidden="" class="future" style="top: -20px; display: none;"><h2>Promise transformations</h2><div class="listingblock"><div class="content"><pre class="CodeRay"><code class="groovy language-groovy">Promise.of { <span class="local-variable">it</span>.down(<span class="string"><span class="delimiter">"</span><span class="content">foo</span><span class="delimiter">"</span></span>) }
+<section id="promise-transformations"><h2>Promise transformations</h2><div class="listingblock"><div class="content"><pre class="CodeRay"><code class="groovy language-groovy">Promise.of { <span class="local-variable">it</span>.down(<span class="string"><span class="delimiter">&quot;</span><span class="content">foo</span><span class="delimiter">&quot;</span></span>) }
   .map { <span class="local-variable">it</span>.toUpperCase() }
   .flatMap { foo -&gt;
     Blocking.get {
-      <span class="keyword">new</span> <span class="predefined-type">File</span>(<span class="string"><span class="delimiter">"</span><span class="content">foo.txt</span><span class="delimiter">"</span></span>).text
+      <span class="keyword">new</span> <span class="predefined-type">File</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">foo.txt</span><span class="delimiter">&quot;</span></span>).text
     }.map {
       <span class="local-variable">it</span> + foo
     }
@@ -240,12 +238,12 @@ Execution.fork().start {
   .then {
     println <span class="local-variable">it</span>
   }</code></pre></div></div></section>
-<section id="promise-transformations-2" hidden="" class="future" style="top: -20px; display: none;"><h2>Promise transformations</h2><div class="listingblock"><div class="content"><pre class="CodeRay"><code class="groovy language-groovy"><span class="keyword">package</span> ratpack.exec;
+<section id="promise-transformations-2"><h2>Promise transformations</h2><div class="listingblock"><div class="content"><pre class="CodeRay"><code class="groovy language-groovy"><span class="keyword">package</span> ratpack.exec;
 
 <span class="directive">public</span> <span class="type">interface</span> Promise&lt;T&gt; {
   &lt;O&gt; Promise&lt;O&gt; transform(Function&lt;Upstream&lt;T&gt;, Upstream&lt;O&gt;&gt; function);
 }</code></pre></div></div></section>
-<section id="map" hidden="" class="future" style="top: -20px; display: none;"><h2>map()</h2><div class="listingblock"><div class="content"><pre class="CodeRay"><code class="groovy language-groovy">&lt;O&gt; Promise&lt;O&gt; map(Function&lt;T, O&gt; function) {
+<section id="map"><h2>map()</h2><div class="listingblock"><div class="content"><pre class="CodeRay"><code class="groovy language-groovy">&lt;O&gt; Promise&lt;O&gt; map(Function&lt;T, O&gt; function) {
   <span class="keyword">return</span> transform(up -&gt;
     down -&gt; up.connect(<span class="keyword">new</span> Downstream&lt;T&gt;() {
 
@@ -262,31 +260,31 @@ Execution.fork().start {
     })
   );
 }</code></pre></div></div></section>
-<section id="other-transform-impls" hidden="" class="future" style="top: -20px; display: none;"><h2>Other transform impls…</h2><div class="paragraph"><p>Read the <a href="https://github.com/ratpack/ratpack/blob/master/ratpack-core/src/main/java/ratpack/exec/Promise.java">source of <code>ratpack.exec.Promise</code></a>.</p></div></section>
-<section id="handler-composition" hidden="" class="future" style="top: -20px; display: none;"><h2>Handler Composition</h2><div class="paragraph fragment" data-fragment-index="0"><p>All request handling logic is expressed as a single handler.</p></div></section>
-<section id="handler" hidden="" class="future" style="top: -20px; display: none;"><h2>Handler</h2><div class="listingblock"><div class="content"><pre class="CodeRay"><code class="groovy language-groovy"><span class="keyword">package</span> ratpack.handling;
+<section id="other-transform-impls"><h2>Other transform impls…</h2><div class="paragraph"><p>Read the <a href="https://github.com/ratpack/ratpack/blob/master/ratpack-core/src/main/java/ratpack/exec/Promise.java">source of <code>ratpack.exec.Promise</code></a>.</p></div></section>
+<section id="handler-composition"><h2>Handler Composition</h2><div class="paragraph fragment"><p>All request handling logic is expressed as a single handler.</p></div></section>
+<section id="handler"><h2>Handler</h2><div class="listingblock"><div class="content"><pre class="CodeRay"><code class="groovy language-groovy"><span class="keyword">package</span> ratpack.handling;
 
 <span class="directive">public</span> <span class="type">interface</span> <span class="predefined-type">Handler</span> {
   <span class="type">void</span> handle(<span class="predefined-type">Context</span> ctx) <span class="directive">throws</span> <span class="exception">Exception</span>;
 }</code></pre></div></div></section>
-<section id="closures-as-handlers" hidden="" class="future" style="top: -20px; display: none;"><h2>Closures as handlers</h2><div class="listingblock"><div class="content"><pre class="CodeRay"><code class="groovy language-groovy">handlers {
+<section id="closures-as-handlers"><h2>Closures as handlers</h2><div class="listingblock"><div class="content"><pre class="CodeRay"><code class="groovy language-groovy">handlers {
   get {
-    render <span class="string"><span class="delimiter">"</span><span class="content">Hello world!</span><span class="delimiter">"</span></span>
+    render <span class="string"><span class="delimiter">&quot;</span><span class="content">Hello world!</span><span class="delimiter">&quot;</span></span>
   }
 }</code></pre></div></div>
 <div class="listingblock"><div class="content"><pre class="CodeRay"><code class="groovy language-groovy">handlers {
   get <span class="keyword">new</span> <span class="predefined-type">Handler</span>() {
     <span class="type">void</span> handle(<span class="predefined-type">Context</span> ctx) {
-      ctx.render <span class="string"><span class="delimiter">"</span><span class="content">Hello world!</span><span class="delimiter">"</span></span>
+      ctx.render <span class="string"><span class="delimiter">&quot;</span><span class="content">Hello world!</span><span class="delimiter">&quot;</span></span>
     }
   }
 }</code></pre></div></div></section>
-<section id="handler-delegation" hidden="" class="future" style="top: -20px; display: none;"><h2>Handler delegation</h2><div class="paragraph"><p>Handlers either respond, or <em>delegate</em>.</p></div>
-<div class="ulist"><ul><li class="fragment" data-fragment-index="0"><p><code>Context.next()</code></p></li><li class="fragment" data-fragment-index="1"><p><code>Context.insert(Handler…​)</code></p></li><li class="fragment" data-fragment-index="2"><p><code>«handler».handle(context)</code></p></li></ul></div></section>
-<section id="chain-basics" hidden="" class="future" style="top: -20px; display: none;"><h2>Chain basics</h2><div class="listingblock"><div class="content"><pre class="CodeRay"><code class="groovy language-groovy">handlers {
+<section id="handler-delegation"><h2>Handler delegation</h2><div class="paragraph"><p>Handlers either respond, or <em>delegate</em>.</p></div>
+<div class="ulist"><ul><li class="fragment"><p><code>Context.next()</code></p></li><li class="fragment"><p><code>Context.insert(Handler&#8230;&#8203;)</code></p></li><li class="fragment"><p><code>«handler».handle(context)</code></p></li></ul></div></section>
+<section id="chain-basics"><h2>Chain basics</h2><div class="listingblock"><div class="content"><pre class="CodeRay"><code class="groovy language-groovy">handlers {
   <span class="comment">// delegate is ratpack.handling.Chain</span>
   all {
-    render <span class="string"><span class="delimiter">"</span><span class="content">Hello world!</span><span class="delimiter">"</span></span>
+    render <span class="string"><span class="delimiter">&quot;</span><span class="content">Hello world!</span><span class="delimiter">&quot;</span></span>
   }
 }</code></pre></div></div>
 <div class="listingblock"><div class="content"><pre class="CodeRay"><code class="groovy language-groovy"><span class="keyword">package</span> ratpack.handling
@@ -295,7 +293,7 @@ Execution.fork().start {
   Chain all(<span class="predefined-type">Handler</span> handler)
 }</code></pre></div></div>
 <div class="paragraph"><p>Collects handlers to a list the inserts.</p></div></section>
-<section id="chainhandler" hidden="" class="future" style="top: -20px; display: none;"><h2>ChainHandler</h2><div class="listingblock"><div class="content"><pre class="CodeRay"><code class="groovy language-groovy"><span class="keyword">package</span> ratpack.handling.internal
+<section id="chainhandler"><h2>ChainHandler</h2><div class="listingblock"><div class="content"><pre class="CodeRay"><code class="groovy language-groovy"><span class="keyword">package</span> ratpack.handling.internal
 
 <span class="directive">public</span> <span class="type">class</span> <span class="class">ChainHandler</span> <span class="directive">implements</span> <span class="predefined-type">Handler</span> {
   <span class="directive">private</span> <span class="directive">final</span> <span class="predefined-type">Handler</span><span class="type">[]</span> handlers;
@@ -308,7 +306,7 @@ Execution.fork().start {
     context.insert(handlers);
   }
 }</code></pre></div></div></section>
-<section id="chain-get-string-handler" hidden="" class="future" style="top: -20px; display: none;"><h2>Chain.get(String, Handler)</h2><div class="listingblock"><div class="content"><pre class="CodeRay"><code class="groovy language-groovy"><span class="keyword">import</span> <span class="include">ratpack.handler.Handlers</span>;
+<section id="chain-get-string-handler"><h2>Chain.get(String, Handler)</h2><div class="listingblock"><div class="content"><pre class="CodeRay"><code class="groovy language-groovy"><span class="keyword">import</span> <span class="include">ratpack.handler.Handlers</span>;
 
 <span class="keyword">default</span> Chain get(<span class="predefined-type">String</span> path, <span class="predefined-type">Handler</span> handler) {
   <span class="keyword">return</span> all(
@@ -318,7 +316,7 @@ Execution.fork().start {
     )
   );
 }</code></pre></div></div></section>
-<section id="handlers" hidden="" class="future" style="top: -20px; display: none;"><h2>Handlers</h2><div class="paragraph"><p>Composable pieces, and the basis of Chain.</p></div>
+<section id="handlers"><h2>Handlers</h2><div class="paragraph"><p>Composable pieces, and the basis of Chain.</p></div>
 <div class="listingblock"><div class="content"><pre class="CodeRay"><code class="groovy language-groovy"><span class="keyword">package</span> ratpack.handling.Handlers;
 
 <span class="directive">public</span> <span class="type">class</span> <span class="class">Handlers</span> {
@@ -332,10 +330,10 @@ Execution.fork().start {
     <span class="keyword">return</span> <span class="keyword">new</span> ChainHandler(handlers);
   }
   <span class="directive">public</span> <span class="directive">static</span> <span class="predefined-type">Handler</span> get() {
-    <span class="keyword">return</span> <span class="keyword">new</span> MethodHandler(<span class="string"><span class="delimiter">"</span><span class="content">GET</span><span class="delimiter">"</span></span>);
+    <span class="keyword">return</span> <span class="keyword">new</span> MethodHandler(<span class="string"><span class="delimiter">&quot;</span><span class="content">GET</span><span class="delimiter">&quot;</span></span>);
   }
 }</code></pre></div></div></section>
-<section id="pathhandler" hidden="" class="future" style="top: -20px; display: none;"><h2>PathHandler</h2><div class="listingblock"><div class="content"><pre class="CodeRay"><code class="groovy language-groovy"><span class="keyword">package</span> ratpack.handling.internal;
+<section id="pathhandler"><h2>PathHandler</h2><div class="listingblock"><div class="content"><pre class="CodeRay"><code class="groovy language-groovy"><span class="keyword">package</span> ratpack.handling.internal;
 
 <span class="directive">public</span> <span class="type">class</span> <span class="class">PathHandler</span> <span class="directive">implements</span> <span class="predefined-type">Handler</span> {
   <span class="directive">private</span> <span class="directive">final</span> PathBinder binder; <span class="directive">private</span> <span class="directive">final</span> <span class="predefined-type">Handler</span> handler;
@@ -354,7 +352,7 @@ Execution.fork().start {
     }
   }
 }</code></pre></div></div></section>
-<section id="methodhandler" hidden="" class="future" style="top: -301.5px; display: block;"><h2>MethodHandler</h2><div class="listingblock"><div class="content"><pre class="CodeRay"><code class="groovy language-groovy"><span class="keyword">package</span> ratpack.handling.internal;
+<section id="methodhandler"><h2>MethodHandler</h2><div class="listingblock"><div class="content"><pre class="CodeRay"><code class="groovy language-groovy"><span class="keyword">package</span> ratpack.handling.internal;
 
 <span class="directive">public</span> <span class="type">class</span> <span class="class">MethodHandler</span> <span class="directive">implements</span> <span class="predefined-type">Handler</span> {
   <span class="directive">private</span> <span class="directive">final</span> <span class="predefined-type">String</span> method;
@@ -371,7 +369,7 @@ Execution.fork().start {
     }
   }
 }</code></pre></div></div></section>
-<section id="chain-get-string-handler-2" hidden="" class="future" style="top: -233px; display: block;"><h2>Chain.get(String, Handler)</h2><div class="listingblock"><div class="content"><pre class="CodeRay"><code class="groovy language-groovy"><span class="keyword">import</span> <span class="include">ratpack.handler.Handlers</span>;
+<section id="chain-get-string-handler-2"><h2>Chain.get(String, Handler)</h2><div class="listingblock"><div class="content"><pre class="CodeRay"><code class="groovy language-groovy"><span class="keyword">import</span> <span class="include">ratpack.handler.Handlers</span>;
 
 <span class="keyword">default</span> Chain get(<span class="predefined-type">String</span> path, <span class="predefined-type">Handler</span> handler) {
   <span class="keyword">return</span> all(
@@ -381,7 +379,7 @@ Execution.fork().start {
     )
   );
 }</code></pre></div></div></section>
-<section id="thanks" hidden="" class="future" style="top: -169px; display: block;"><h2>Thanks!</h2><div class="ulist"><ul><li><p><a href="http://ratpack.io/" class="bare">http://ratpack.io</a></p></li><li><p><a href="https://github.com/ratpack" class="bare">https://github.com/ratpack</a></p></li><li><p>Join the Slack channel and talk to us!</p></li><li><p>Buy Dan Woods' book!</p></li></ul></div></section></div><div class="backgrounds"><div class="slide-background present"></div><div class="slide-background future"></div><div class="slide-background future"></div><div class="slide-background future"></div><div class="slide-background future"></div><div class="slide-background future"></div><div class="slide-background future"></div><div class="slide-background future"></div><div class="slide-background future"></div><div class="slide-background future"></div><div class="slide-background future"></div><div class="slide-background future"></div><div class="slide-background future"></div><div class="slide-background future"></div><div class="slide-background future"></div><div class="slide-background future"></div><div class="slide-background future"></div><div class="slide-background future"></div><div class="slide-background future"></div><div class="slide-background future"></div><div class="slide-background future"></div><div class="slide-background future"></div><div class="slide-background future"></div><div class="slide-background future"></div><div class="slide-background future"></div><div class="slide-background future"></div><div class="slide-background future"></div><div class="slide-background future"></div><div class="slide-background future"></div><div class="slide-background future"></div><div class="slide-background future"></div><div class="slide-background future"></div><div class="slide-background future"></div><div class="slide-background future"></div><div class="slide-background future"></div><div class="slide-background future"></div><div class="slide-background future"></div><div class="slide-background future"></div><div class="slide-background future"></div><div class="slide-background future"></div></div><div class="progress" style="display: block;"><span style="width: 0px;"></span></div><aside class="controls" style="display: block;"><div class="navigate-left"></div><div class="navigate-right enabled"></div><div class="navigate-up"></div><div class="navigate-down"></div></aside><div class="slide-number">0</div><div class="state-background"></div><div class="pause-overlay"></div></div><script src="./Ratpack_files/head.min.js"></script><script src="./Ratpack_files/reveal.js"></script><script type="text/javascript">// See https://github.com/hakimel/reveal.js#configuration for a full list of configuration options
+<section id="thanks"><h2>Thanks!</h2><div class="ulist"><ul><li><p><a href="http://ratpack.io" class="bare">http://ratpack.io</a></p></li><li><p><a href="https://github.com/ratpack" class="bare">https://github.com/ratpack</a></p></li><li><p>Join the Slack channel and talk to us!</p></li><li><p>Buy Dan Woods' book!</p></li></ul></div></section></div></div><script src="reveal.js/lib/js/head.min.js"></script><script src="reveal.js/js/reveal.js"></script><script type="text/javascript">// See https://github.com/hakimel/reveal.js#configuration for a full list of configuration options
 Reveal.initialize({
   // Display controls in the bottom right corner
   controls: true,
@@ -458,4 +456,4 @@ Reveal.initialize({
       { src: 'reveal.js/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
       { src: 'reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
   ]
-});</script><script type="text/javascript" src="./Ratpack_files/zoom.js"></script><script type="text/javascript" src="./Ratpack_files/notes.js"></script></body></html>
+});</script></body></html>
